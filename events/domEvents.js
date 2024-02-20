@@ -1,5 +1,7 @@
 import { getBooks, deleteBook } from '../api/bookData';
 import { showBooks } from '../pages/books';
+import { deleteSingleAuthor, getAuthors } from '../api/authorData';
+import { showAuthors } from '../pages/authors';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -37,7 +39,11 @@ const domEvents = () => {
       // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         console.warn('DELETE AUTHOR', e.target.id);
-        console.warn(e.target.id.split('--'));
+        const [, firebaseKey] = e.target.id.split('--');
+
+        deleteSingleAuthor(firebaseKey).then(() => {
+          getAuthors().then(showAuthors);
+        });
       }
     }
 
