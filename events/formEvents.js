@@ -1,4 +1,4 @@
-import { getAuthors, updateAuthor } from '../api/authorData';
+import { createAuthor, getAuthors, updateAuthor } from '../api/authorData';
 import { getBooks, createBook, updateBook } from '../api/bookData';
 import { showAuthors } from '../pages/authors';
 import { showBooks } from '../pages/books';
@@ -57,8 +57,12 @@ const formEvents = () => {
         firebaseKey,
       };
 
-      updateAuthor(payload).then(() => {
-        getAuthors().then(showAuthors);
+      createAuthor(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+
+        updateAuthor(patchPayload).then(() => {
+          getAuthors().then(showAuthors);
+        });
       });
     }
     // FIXME:ADD CLICK EVENT FOR EDITING AN AUTHOR
