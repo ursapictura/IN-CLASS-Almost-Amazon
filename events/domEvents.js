@@ -5,13 +5,12 @@ import {
   deleteSingleAuthor,
   getAuthors,
   getSingleAuthor,
-  deleteAuthorBooksRelationship
 } from '../api/authorData';
 
 import { showAuthors } from '../pages/authors';
 import addBookForm from '../components/forms/addBookForm';
 import addAuthorForm from '../components/forms/addAuthorForm';
-import { getBookDetails, getAuthorDetails } from '../api/mergedData';
+import { getBookDetails, getAuthorDetails, deleteAuthorBooksRelationship } from '../api/mergedData';
 import viewBook from '../pages/viewBook';
 import viewAuthor from '../pages/viewAuthor';
 
