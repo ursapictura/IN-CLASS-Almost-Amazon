@@ -6,7 +6,6 @@ import { showAuthors, emptyAuthors } from '../pages/authors';
 import clearDom from '../utils/clearDom';
 import renderToDOM from '../utils/renderToDom';
 import { searchStore } from '../api/mergedData';
-
 // navigation events
 const navigationEvents = () => {
   // LOGOUT BUTTON
