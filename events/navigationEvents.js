@@ -3,7 +3,9 @@ import { getBooks, booksOnSale } from '../api/bookData';
 import { emptyBooks, showBooks } from '../pages/books';
 import { getAuthors, favoriteAuthors } from '../api/authorData';
 import { showAuthors, emptyAuthors } from '../pages/authors';
-
+import clearDom from '../utils/clearDom';
+import renderToDOM from '../utils/renderToDom';
+import { searchStore } from '../api/mergedData';
 // navigation events
 const navigationEvents = () => {
   // LOGOUT BUTTON
@@ -60,10 +62,20 @@ const navigationEvents = () => {
       // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
       // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
       // OTHERWISE SHOW THE STORE
-
-      document.querySelector('#search').value = '';
+      searchStore(searchValue).then(({ books, authors }) => {
+        if (books.length > 0) {
+          showBooks(books);
+        } else if (authors.length > 0) {
+          showAuthors(authors);
+        } else {
+          clearDom();
+          const domString = '<h1>No Results</h1>';
+          renderToDOM('#store', domString);
+        }
+      });
     }
   });
+  document.querySelector('#search').value = '';
 };
 
 export default navigationEvents;

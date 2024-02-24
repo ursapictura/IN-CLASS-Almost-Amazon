@@ -101,5 +101,5 @@ export {
   deleteSingleAuthor,
   updateAuthor,
   getAuthorBooks,
-  favoriteAuthors,
+  favoriteAuthors
 };
