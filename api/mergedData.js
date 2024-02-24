@@ -1,5 +1,5 @@
-import { getSingleBook } from './bookData';
-import { getSingleAuthor, getAuthorBooks } from './authorData';
+import { getSingleBook, getBooks } from './bookData';
+import { getSingleAuthor, getAuthorBooks, getAuthors } from './authorData';
 
 // for merged promises
 const getBookDetails = async (firebaseKey) => { // the async keyword let's JS know this is asynchronous function (promise)
@@ -17,4 +17,20 @@ const getAuthorDetails = async (firebaseKey) => { // the async keyword let's JS 
   return { ...authorObject, books: authorBooks };
 };
 
-export { getBookDetails, getAuthorDetails };
+// TODO: STRETCH...SEARCH BOOKS
+const searchBooks = async (searchValue) => {
+  const allBooks = await getBooks();
+  const allAuthors = await getAuthors();
+  const filteredBooks = await allBooks.filter((book) => (
+    book.title.toLowerCase().includes(searchValue)
+    || book.description.toLowerCase().includes(searchValue)));
+
+  const filteredAuthors = await allAuthors.filter((author) => (
+    author.first_name.toLowerCase().includes(searchValue)
+    || author.last_name.toLowerCase().includes(searchValue)
+    || author.email.toLowerCase().includes(searchValue)
+  ));
+  return { authors: filteredAuthors, books: filteredBooks };
+};
+
+export { getBookDetails, getAuthorDetails, searchBooks };

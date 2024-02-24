@@ -1,4 +1,5 @@
 import client from '../utils/client';
+import { deleteBook } from './bookData';
 
 const endpoint = client.databaseURL;
 
@@ -94,6 +95,13 @@ const getAuthorBooks = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteAuthorBooksRelationship = async (authorFirebaseKey) => {
+  const authorBooks = await getAuthorBooks(authorFirebaseKey);
+  const deleteBookPromises = await authorBooks.map((abObj) => deleteBook(abObj.firebaseKey));
+
+  await Promise.all(deleteBookPromises).then(() => deleteAuthorBooksRelationship(authorFirebaseKey));
+};
+
 export {
   getAuthors,
   createAuthor,
@@ -102,4 +110,5 @@ export {
   updateAuthor,
   getAuthorBooks,
   favoriteAuthors,
+  deleteAuthorBooksRelationship,
 };
