@@ -18,7 +18,7 @@ const getAuthorDetails = async (firebaseKey) => { // the async keyword let's JS 
 };
 
 // TODO: STRETCH...SEARCH BOOKS
-const searchBooks = async (searchValue) => {
+const searchStore = async (searchValue) => {
   const allBooks = await getBooks();
   const allAuthors = await getAuthors();
   const filteredBooks = await allBooks.filter((book) => (
@@ -33,4 +33,4 @@ const searchBooks = async (searchValue) => {
   return { authors: filteredAuthors, books: filteredBooks };
 };
 
-export { getBookDetails, getAuthorDetails, searchBooks };
+export { getBookDetails, getAuthorDetails, searchStore };

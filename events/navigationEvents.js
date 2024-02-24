@@ -5,7 +5,7 @@ import { getAuthors, favoriteAuthors } from '../api/authorData';
 import { showAuthors, emptyAuthors } from '../pages/authors';
 import clearDom from '../utils/clearDom';
 import renderToDOM from '../utils/renderToDom';
-import { searchBooks } from '../api/mergedData';
+import { searchStore } from '../api/mergedData';
 
 // navigation events
 const navigationEvents = () => {
@@ -63,7 +63,7 @@ const navigationEvents = () => {
       // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
       // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
       // OTHERWISE SHOW THE STORE
-      searchBooks(searchValue).then(({ books, authors }) => {
+      searchStore(searchValue).then(({ books, authors }) => {
         if (books.length > 0) {
           showBooks(books);
         } else if (authors.length > 0) {
