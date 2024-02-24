@@ -1,4 +1,4 @@
-import { getSingleBook, getBooks } from './bookData';
+import { getSingleBook, getBooks, deleteBook } from './bookData';
 import { getSingleAuthor, getAuthorBooks, getAuthors } from './authorData';
 
 // for merged promises
@@ -17,6 +17,13 @@ const getAuthorDetails = async (firebaseKey) => { // the async keyword let's JS 
   return { ...authorObject, books: authorBooks };
 };
 
+const deleteAuthorBooksRelationship = async (authorFirebaseKey) => {
+  const authorBooks = await getAuthorBooks(authorFirebaseKey);
+  const deleteBookPromises = await authorBooks.map((abObj) => deleteBook(abObj.firebaseKey));
+
+  await Promise.all(deleteBookPromises).then(() => deleteAuthorBooksRelationship(authorFirebaseKey));
+};
+
 // TODO: STRETCH...SEARCH BOOKS
 const searchStore = async (searchValue) => {
   const allBooks = await getBooks();
@@ -33,4 +40,9 @@ const searchStore = async (searchValue) => {
   return { authors: filteredAuthors, books: filteredBooks };
 };
 
-export { getBookDetails, getAuthorDetails, searchStore };
+export {
+  getBookDetails,
+  getAuthorDetails,
+  searchStore,
+  deleteAuthorBooksRelationship
+};
