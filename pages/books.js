@@ -1,22 +1,26 @@
 import clearDom from '../utils/clearDom';
 import renderToDOM from '../utils/renderToDom';
 
+const addBookBtn = () => {
+  const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-book-btn">Add A Book</button>';
+  renderToDOM('#add-button', btnString);
+};
+
 const emptyBooks = () => {
+  clearDom();
+  addBookBtn();
   const domString = '<h1>No Books</h1>';
   renderToDOM('#store', domString);
 };
 
 const showBooks = (array) => {
   clearDom();
-  let domString = '';
-  if (array.length <= 0) {
-    emptyBooks();
-  } else {
-    const btnString = '<button class="btn btn-success btn-lg mb-4" id="add-book-btn">Add A Book</button>';
-    renderToDOM('#add-button', btnString);
 
-    array.forEach((item) => {
-      domString += `
+  addBookBtn();
+
+  let domString = '';
+  array.forEach((item) => {
+    domString += `
         <div class="card">
           <img class="card-img-top" src=${item.image} alt=${item.title} style="height: 400px;">
           <div class="card-body" style="height: 180px;">
@@ -28,8 +32,7 @@ const showBooks = (array) => {
               <i id="delete-book-btn--${item.firebaseKey}" class="btn btn-danger"><span class="fas fa-trash-alt"></span></i>
           </div>
         </div>`;
-    });
-  }
+  });
   renderToDOM('#store', domString);
 };
 

@@ -14,7 +14,7 @@ import { getBookDetails, getAuthorDetails, deleteAuthorBooksRelationship } from 
 import viewBook from '../pages/viewBook';
 import viewAuthor from '../pages/viewAuthor';
 
-const domEvents = () => {
+const domEvents = (uid) => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
     // TODO: CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
@@ -24,7 +24,7 @@ const domEvents = () => {
         const [, firebaseKey] = e.target.id.split('--');
 
         deleteBook(firebaseKey).then(() => {
-          getBooks().then(showBooks);
+          getBooks(uid).then(showBooks);
         });
       }
     }
@@ -57,11 +57,11 @@ const domEvents = () => {
         const [, firebaseKey] = e.target.id.split('--');
 
         deleteAuthorBooksRelationship(firebaseKey).then(() => {
-          getAuthors().then(showAuthors);
+          getAuthors(uid).then(showAuthors);
         });
 
         deleteSingleAuthor(firebaseKey).then(() => {
-          getAuthors().then(showAuthors);
+          getAuthors(uid).then(showAuthors);
         });
       }
     }
