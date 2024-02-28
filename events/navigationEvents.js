@@ -68,7 +68,7 @@ const navigationEvents = (uid) => {
       // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
       // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
       // OTHERWISE SHOW THE STORE
-      searchStore(searchValue).then(({ books, authors }) => {
+      searchStore(uid, searchValue).then(({ books, authors }) => {
         if (books.length > 0) {
           showBooks(books);
         } else if (authors.length > 0) {
